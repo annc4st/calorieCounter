@@ -15,3 +15,52 @@ function isInvalidInput(str) {
   const regex = /\d+e\d+/i;
   return str.match(regex);
 }
+/*Step 37
+You'll need to know which category the entry goes in. 
+Thankfully, you added a dropdown for the user to select a category.
+Remember that you queried that dropdown earlier in your 
+JavaScript and assigned it to the entryDropdown button. 
+You can use the value property to get the value of the selected option.
+
+Use concatenation to add a # to the beginning of the value property 
+of entryDropdown, and assign that result to a targetId variable.
+
+target the .input-container element within the element that has your targetId.
+*/
+function addEntry() {
+  const targetInputContainer = document.querySelector(`#${entryDropdown.value} .input-container`);
+  const entryNumber = targetInputContainer.querySelectorAll('input[type="text"]').length + 1;
+  const HTMLString = `
+  <label for="${entryDropdown.value}-${entryNumber}-name">Entry ${entryNumber} Name</label>
+  <input type="text" id="${entryDropdown.value}-${entryNumber}-name" placeholder="Name" />
+  <label for="${entryDropdown.value}-${entryNumber}-calories">Entry ${entryNumber} Calories</label>
+  <input
+    type="number"
+    min="0"
+    id="${entryDropdown.value}-${entryNumber}-calories"
+    placeholder="Calories"
+  />`;
+  targetInputContainer.insertAdjacentHTML('beforeend', HTMLString);
+}
+
+function calculateCalories(e) {
+  e.preventDefault();
+  isError = false;
+
+  const breakfastNumberInputs = document.querySelectorAll('#breakfast input[type=number]');
+  const lunchNumberInputs = document.querySelectorAll('#lunch input[type=number]');
+  const dinnerNumberInputs = document.querySelectorAll('#dinner input[type=number]');
+  const snacksNumberInputs = document.querySelectorAll('#snacks input[type=number]');
+  const exerciseNumberInputs = document.querySelectorAll('#exercise input[type=number]');
+
+  const breakfastCalories = getCaloriesFromInputs(breakfastNumberInputs);
+  const lunchCalories = getCaloriesFromInputs(lunchNumberInputs);
+  const dinnerCalories = getCaloriesFromInputs(dinnerNumberInputs);
+  const snacksCalories = getCaloriesFromInputs(snacksNumberInputs);
+  const exerciseCalories = getCaloriesFromInputs(exerciseNumberInputs);
+  const budgetCalories = getCaloriesFromInputs([budgetNumberInput]);
+  if (isError) {
+    return;
+  }
+
+}
